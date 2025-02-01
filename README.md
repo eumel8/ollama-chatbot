@@ -7,7 +7,12 @@ Data are scraped by a web crawler with pre-defined url.
 ## Preconditions
 
 * Used with Ubuntu 22.04 VM
-* Python3
+* Python3 with Python Pip
+
+```bash
+apt install -y python-pip
+```
+
 * Ollama
 
 Ollama can be installed with
@@ -41,6 +46,12 @@ Install Python Modules
 python -m venv ./venv
 . ./venv/bin/activate
 ./venv/bin/pip install -r requirements.txt
+```
+
+Python Venv can be deactivated with
+
+```bash
+deactivate
 ```
 
 ## Crawl data
