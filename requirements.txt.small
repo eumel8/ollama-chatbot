@@ -1,6 +1,10 @@
+beautifulsoup4
 gradio
 PyPDF2
 langchain
 langchain-community
 chromadb
+#css
 ollama
+#grammar
+#spacy
