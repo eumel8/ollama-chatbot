@@ -59,7 +59,7 @@ deactivate
 Adjust `urls.txt` with your interested targets and start the crawler
 
 ```bash
-./venv/bin/pypthon vector_crawler.py
+./venv/bin/pypthon web_crawler.py
 ```
 
 ## Chatbot
