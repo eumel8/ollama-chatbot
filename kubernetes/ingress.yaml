@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ollama-chatbot
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/affinity: cookie
+    cert-manager.io/issuer: letsencrypt
+spec:
+ingressClassName: nginx
+  rules:
+  - host: kubeadm.otc.mcsps.de
+    http:
+      paths:
+      - backend:
+          service:
+            name: olama-chatbot
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    -  kubeadm.otc.mcsps.de
+    secretName: kubeadm-otx-mcsps-de-tls-secret

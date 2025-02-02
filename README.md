@@ -82,6 +82,16 @@ kubectl apply -f service.yaml
 kubectl apply -f statefulset.yaml
 ```
 
+Service is reachable via port-forward or on the service endpoint. Here is an example if you have cert-manager and ingress-nginx-controller installed:
+
+```bash
+kubectl apply -f issuer.yaml
+kubectl apply -f ingress.yaml
+```
+
+Adjust hostname and e-mail address before usage.
+
+
 ## Credits
 
 Inspired by [https://github.com/siddiqitaha/AI_Rag_Llama2](https://github.com/siddiqitaha/AI_Rag_Llama2)
