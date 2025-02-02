@@ -4,6 +4,8 @@ A chatbot to use a local AI model like `deepseek-r1` to serve a web ui similar t
 
 Data are scraped by a web crawler with pre-defined url.
 
+![image](ollama-chatbot.png)
+
 ## Preconditions
 
 * Used with Ubuntu 22.04 VM
