@@ -15,7 +15,7 @@ ingressClassName: nginx
       paths:
       - backend:
           service:
-            name: olama-chatbot
+            name: ollama-chatbot
             port:
               number: 80
         path: /
