@@ -72,6 +72,16 @@ Start the [Gradio Web UI](https://www.gradio.app):
 
 Browse to http://127.0.0.1:9000 to use the Chatbot. In `config.txt` you can adjust listen address, port and used theme.
 
+## Kubernetes
+
+Run ollama-chatbot in Kubernetes (1.30+)
+
+```bash
+kubectl apply -f configmap.yaml
+kubectl apply -f service.yaml
+kubectl apply -f statefulset.yaml
+```
+
 ## Credits
 
 Inspired by [https://github.com/siddiqitaha/AI_Rag_Llama2](https://github.com/siddiqitaha/AI_Rag_Llama2)

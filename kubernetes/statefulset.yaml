@@ -28,7 +28,7 @@ spec:
         - sh
         - -c
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           exec:
             command:
@@ -39,11 +39,64 @@ spec:
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
-        name: ollama-chatbot
+        name: ollama
         resources:
           limits:
-            cpu: "1"
-            memory: 1Gi
+            cpu: "12"
+            memory: 64Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+            - CAP_NET_RAW
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /home/appuser/.ollama
+          name: ollama
+        - mountPath: /tmp
+          name: tmp
+      - command:
+        - /home/appuser/run/run.sh
+        image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - ollama
+            - list
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: ollama-chatbot
+        ports:
+        - containerPort: 9000
+        readinessProbe:
+          exec:
+            command:
+            - ollama
+            - list
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "12"
+            memory: 64Gi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -65,11 +118,13 @@ spec:
         - mountPath: /home/appuser/.ollama
           name: ollama
         - mountPath: /vectorstore
-          name: workdir
+          name: vectorstore
         - mountPath: /tmp
           name: tmp
         - name: config-volume
           mountPath: /home/appuser/chatbot-config
+        - name: run-volume
+          mountPath: /home/appuser/run
         - name: url-volume
           mountPath: /home/appuser/urls
       dnsPolicy: ClusterFirst
@@ -82,19 +137,23 @@ spec:
           type: RuntimeDefault
         supplementalGroups:
         - 1000
-      serviceAccount: ollama-chatbot
-      serviceAccountName: ollama-chatbot
+      serviceAccount: default
+      serviceAccountName: default
       terminationGracePeriodSeconds: 1
       volumes:
       - name: config-volume
         configMap:
           name: ollama-chatbot
+      - name: run-volume
+        configMap:
+          defaultMode: 0755
+          name: run
       - name: url-volume
         configMap:
           name: urls
       - emptyDir:
           medium: Memory
-          sizeLimit: 5000Mi
+          sizeLimit: 32000Mi
         name: ollama
       - emptyDir:
           sizeLimit: 5000Mi

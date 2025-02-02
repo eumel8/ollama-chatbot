@@ -1,0 +1,11 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ollama-chatbot
+spec:
+  selector:
+    app: ollama-chatbot
+  ports:
+    - port: 80
+      targetPort: 9000

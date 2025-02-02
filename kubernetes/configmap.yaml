@@ -29,3 +29,18 @@ data:
 kind: ConfigMap
 metadata:
   name: urls
+---
+---
+apiVersion: v1
+data:
+  run.sh: |
+    #!/bin/sh
+    ollama pull deepseek-r1:1.5b
+    ollama pull nomic-embed-text
+    sleep 30
+    python3 web_crawler.py --urls ./urls/urls.txt --config ./chatbot-config/config.txt &
+    sleep 30
+    python3 web_ui.py --config ./chatbot-config/config.txt
+kind: ConfigMap
+metadata:
+  name: run
