@@ -6,7 +6,7 @@ data:
     # Ollama model for text rendering
     embeddingmodel=nomic-embed-text
     # Ollama model for deep think
-    mainmodel=deepseek-r1:1.5b
+    mainmodel=deepseek-r1:32b
     # Deep of the web crawler
     crawldeep=1
     # Used vector results for deep think, be careful
@@ -14,7 +14,7 @@ data:
     # Listen address for web ui
     servername=0.0.0.0
     # Listen port for web ui
-    #serverport=9000
+    serverport=9000
     # web ui theme: Base, Default, Glass, Monochrome, Soft
     theme=Monochrome
 kind: ConfigMap
@@ -25,6 +25,7 @@ apiVersion: v1
 data:
   urls.txt: |
     https://github.com/eumel8/cosignwebhook/blob/main/README.md
+    #https://api.github.com/repos/eumel8/cosignwebhook
     https://github.com/eumel8/overlaytest/blob/main/README.md
 kind: ConfigMap
 metadata:
@@ -35,7 +36,7 @@ apiVersion: v1
 data:
   run.sh: |
     #!/bin/sh
-    ollama pull deepseek-r1:1.5b
+    ollama pull deepseek-r1:32b
     ollama pull nomic-embed-text
     sleep 30
     python3 web_crawler.py --urls ./urls/urls.txt --config ./chatbot-config/config.txt &

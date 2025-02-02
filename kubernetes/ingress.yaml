@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/affinity: cookie
     cert-manager.io/issuer: letsencrypt
 spec:
-ingressClassName: nginx
+  ingressClassName: nginx
   rules:
   - host: kubeadm.otc.mcsps.de
     http:
