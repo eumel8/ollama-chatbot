@@ -1,0 +1,31 @@
+apiVersion: v1
+data:
+  config.txt: |
+    # Directory where to store the VectorDB
+    vectorstore=/vectorstore
+    # Ollama model for text rendering
+    embeddingmodel=nomic-embed-text
+    # Ollama model for deep think
+    mainmodel=deepseek-r1:1.5b
+    # Deep of the web crawler
+    crawldeep=1
+    # Used vector results for deep think, be careful
+    vectorresults=2
+    # Listen address for web ui
+    servername=0.0.0.0
+    # Listen port for web ui
+    #serverport=9000
+    # web ui theme: Base, Default, Glass, Monochrome, Soft
+    theme=Monochrome
+kind: ConfigMap
+metadata:
+  name: ollama-chatbot
+---
+apiVersion: v1
+data:
+  urls.txt: |
+    https://github.com/eumel8/cosignwebhook/blob/main/README.md
+    https://github.com/eumel8/overlaytest/blob/main/README.md
+kind: ConfigMap
+metadata:
+  name: urls

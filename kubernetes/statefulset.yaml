@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: ollama-chatbot
+  name: ollama-chatbot
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ollama-chatbot
+  serviceName: ollama-chatbot
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ollama-chatbot
+    spec:
+      containers:
+      - args:
+        - ollama serve
+        command:
+        - sh
+        - -c
+        image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /tmp
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: ollama-chatbot
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+            - CAP_NET_RAW
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /home/appuser/.ollama
+          name: ollama
+        - mountPath: /vectorstore
+          name: workdir
+        - mountPath: /tmp
+          name: tmp
+        - name: config-volume
+          mountPath: /home/appuser/chatbot-config
+        - name: url-volume
+          mountPath: /home/appuser/urls
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+        supplementalGroups:
+        - 1000
+      serviceAccount: ollama-chatbot
+      serviceAccountName: ollama-chatbot
+      terminationGracePeriodSeconds: 1
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ollama-chatbot
+      - name: url-volume
+        configMap:
+          name: urls
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 5000Mi
+        name: ollama
+      - emptyDir:
+          sizeLimit: 5000Mi
+        name: vectorstore
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 500Mi
+        name: tmp
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
