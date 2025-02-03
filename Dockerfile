@@ -10,6 +10,8 @@ RUN pip install -r /home/appuser/requirements.txt
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
-RUN ollama serve && ollama pull nomic-embed-text && ollama pull deepseek-r1:7b
+RUN ollama serve
+RUN ollama pull nomic-embed-text
+RUN ollama pull deepseek-r1:7b
 ENV PYTHONUNBUFFERED=0
 ENTRYPOINT ollama serve
