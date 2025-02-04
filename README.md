@@ -4,7 +4,7 @@ A chatbot to use a local AI model like `deepseek-r1` to serve a web ui similar t
 
 Data are scraped by a web crawler with pre-defined url.
 
-![image](ollama-chatbot.png)
+![image](chatbot.png)
 
 ## Preconditions
 
