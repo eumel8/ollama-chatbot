@@ -49,6 +49,10 @@ apiVersion: v1
 data:
   run.sh: |
     #!/bin/sh
+    while [ ! -e "/vectorstore/crawl_ready" ]; do
+    echo "Crawler not ready, waiting..."
+    sleep 5
+    done
     python3 web_ui.py --config ./chatbot-config/config.txt
 kind: ConfigMap
 metadata:

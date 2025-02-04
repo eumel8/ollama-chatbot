@@ -32,10 +32,23 @@ spec:
         livenessProbe:
           exec:
             command:
-            - ls
-            - /tmp
+            - "sh"
+            - "-c"
+            - "test -d /home/appuser/.ollama"
           failureThreshold: 3
           initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: ollama
+        readinessProbe:
+          exec:
+            command:
+            - "sh"
+            - "-c"
+            - "test -d /home/appuser/.ollama"
+          failureThreshold: 3
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
@@ -54,7 +67,7 @@ spec:
             - ALL
             - CAP_NET_RAW
           privileged: false
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
           seccompProfile:
@@ -70,22 +83,13 @@ spec:
         - /home/appuser/run/run.sh
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
-        livenessProbe:
-          exec:
-            command:
-            - ollama
-            - list
-          failureThreshold: 3
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 1
         name: ollama-crawler
         readinessProbe:
           exec:
             command:
-            - ollama
-            - list
+            - "sh"
+            - "-c"
+            - "ollama list && echo 'Ollama ready' || 'Ollama NOT ready'"
           failureThreshold: 3
           initialDelaySeconds: 5
           periodSeconds: 5
@@ -105,7 +109,7 @@ spec:
             - ALL
             - CAP_NET_RAW
           privileged: false
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
           seccompProfile:
@@ -132,27 +136,28 @@ spec:
         livenessProbe:
           exec:
             command:
-            - ollama
-            - list
-          failureThreshold: 3
-          initialDelaySeconds: 5
-          periodSeconds: 5
+            - "sh"
+            - "-c"
+            - "ollama list"
+          failureThreshold: 10
+          initialDelaySeconds: 20
+          periodSeconds: 10
           successThreshold: 1
-          timeoutSeconds: 1
+          timeoutSeconds: 5
         name: ollama-chatbot
         ports:
         - containerPort: 9000
         readinessProbe:
           exec:
             command:
-            - test
-            - -f
-            - /vectorstore/crawl_ready
+            - "sh"
+            - "-c"
+            - "test -f /vectorstore/crawl_readye && echo 'Crawler is ready' || echo 'Crawler is NOT ready'"
           failureThreshold: 90
           initialDelaySeconds: 90
           periodSeconds: 30
           successThreshold: 1
-          timeoutSeconds: 1
+          timeoutSeconds: 5
         resources:
           limits:
             cpu: "12"
@@ -167,7 +172,7 @@ spec:
             - ALL
             - CAP_NET_RAW
           privileged: false
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
           seccompProfile:
