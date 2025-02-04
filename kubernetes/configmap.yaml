@@ -24,10 +24,10 @@ metadata:
 apiVersion: v1
 data:
   urls.txt: |
-    http://gitrepo.ollama-chatbot/repo/
-    #https://github.com/eumel8/cosignwebhook/blob/main/README.md
-    #https://api.github.com/repos/eumel8/cosignwebhook
+    https://github.com/eumel8/cosignwebhook/blob/main/README.md
+    https://api.github.com/repos/eumel8/cosignwebhook
     #https://github.com/eumel8/overlaytest/blob/main/README.md
+    #http://gitrepo.ollama-chatbot/repo/
 kind: ConfigMap
 metadata:
   name: urls
