@@ -3,7 +3,7 @@ name: Build Image
 on:
   push:
     branches:
-      - "**"
+      - main
     tags:
       - "*"
 
@@ -28,6 +28,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=branch
             type=ref,event=pr
+            type=raw,value=latest
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -46,6 +47,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
+            ghcr.io/eumel8/ollama-chatbot/ollama:latest
             ${{ steps.meta.outputs.tags }}
 
 
