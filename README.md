@@ -94,6 +94,31 @@ kubectl apply -f ingress.yaml
 Adjust hostname and e-mail address before usage.
 
 
+## Use Case local data
+
+An example to fetch local data can be a webserver in the same namespace of a Kubernetes cluster. Look at `kubernetes/gitrepo.yaml` as example. 
+You can use as urls.txt in the ConfigMap
+
+```
+http://gitrepo.default/repo/
+```
+
+```bash
+kubectl apply -f gitrepo.yaml
+```
+
+## Models
+
+Tested models
+
+- deepseek-r1:7b
+- deepseek-r1:14b
+- llama3.1:8b (fast)
+- phi4:14b (>12GB)
+- mistral:7b (few results)
+- qwen:7b (server died)                                                                                                       - codellama:7b (good result on the second query), example of the question, how Cosignwebhook works:                                                                                                                                                         ```                                                                                                                           The program is a Go application that uses Cosign to sign and verify Docker images. The program consists of three main components: the Dockerfile, the cosignwebhook.go file, and the main.go file.                                                                                                                                                                                        The Dockerfile is used to build the image, and it specifies the steps needed to build the image. It also includes a reference to the Cosign CLI tool, which will be used to sign the image when it is built.                                                                                                                                                                              The cosignwebhook.go file is a webhook that listens for events from the Docker daemon and uses Cosign to verify the signature of the images that are being pulled or pushed. This ensures that only trusted images are being used in the system.                                                                                                                                          The main.go file is the entry point of the program, and it sets up the webhook and starts it running. It also includes code to handle events from the Docker daemon, such as when an image is pulled or pushed.
+```
+
 ## Credits
 
 Inspired by [https://github.com/siddiqitaha/AI_Rag_Llama2](https://github.com/siddiqitaha/AI_Rag_Llama2)
