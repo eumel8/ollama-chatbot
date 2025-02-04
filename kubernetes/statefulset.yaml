@@ -81,6 +81,9 @@ spec:
           name: tmp
       - command:
         - /home/appuser/run/run.sh
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
         name: ollama-crawler
@@ -131,6 +134,9 @@ spec:
           mountPath: /home/appuser/urls
       - command:
         - /home/appuser/run/run.sh
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
         livenessProbe:

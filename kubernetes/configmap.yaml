@@ -53,6 +53,7 @@ data:
     echo "Crawler not ready, waiting..."
     sleep 5
     done
+    echo "Crawler finished, started ui"
     python3 web_ui.py --config ./chatbot-config/config.txt
 kind: ConfigMap
 metadata:
