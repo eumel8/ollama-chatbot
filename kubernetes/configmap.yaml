@@ -6,11 +6,11 @@ data:
     # Ollama model for text rendering
     embeddingmodel=nomic-embed-text
     # Ollama model for deep think
-    mainmodel=deepseek-r1:32b
+    mainmodel=deepseek-r1:7b
     # Deep of the web crawler
-    crawldeep=1
+    crawldeep=5
     # Used vector results for deep think, be careful
-    vectorresults=2
+    vectorresults=8
     # Listen address for web ui
     servername=0.0.0.0
     # Listen port for web ui
@@ -24,24 +24,34 @@ metadata:
 apiVersion: v1
 data:
   urls.txt: |
-    https://github.com/eumel8/cosignwebhook/blob/main/README.md
+    http://gitrepo.ollama-chatbot/repo/
+    #https://github.com/eumel8/cosignwebhook/blob/main/README.md
     #https://api.github.com/repos/eumel8/cosignwebhook
-    https://github.com/eumel8/overlaytest/blob/main/README.md
+    #https://github.com/eumel8/overlaytest/blob/main/README.md
 kind: ConfigMap
 metadata:
   name: urls
----
 ---
 apiVersion: v1
 data:
   run.sh: |
     #!/bin/sh
-    ollama pull deepseek-r1:32b
+    #ollama pull nomic-embed-text
+    #ollama pull deepseek-r1:7b
+    python3 web_crawler.py --urls ./urls/urls.txt --config ./chatbot-config/config.txt
+    touch /vectorstore/crawl_ready
+    sleep infinity
+kind: ConfigMap
+metadata:
+  name: run-crawler
+---
+apiVersion: v1
+data:
+  run.sh: |
+    #!/bin/sh
+    ollama pull deepseek-r1:7b
     ollama pull nomic-embed-text
-    sleep 30
-    python3 web_crawler.py --urls ./urls/urls.txt --config ./chatbot-config/config.txt &
-    sleep 30
     python3 web_ui.py --config ./chatbot-config/config.txt
 kind: ConfigMap
 metadata:
-  name: run
+  name: run-ui
