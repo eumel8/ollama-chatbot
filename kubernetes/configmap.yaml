@@ -8,13 +8,13 @@ data:
     # Ollama model for deep think
     mainmodel=deepseek-r1:7b
     # Deep of the web crawler
-    crawldeep=5
+    crawldeep=2
     # Used vector results for deep think, be careful
-    vectorresults=8
+    vectorresults=4
     # Listen address for web ui
-    servername=0.0.0.0
+    #servername=0.0.0.0
     # Listen port for web ui
-    serverport=9000
+    #serverport=9000
     # web ui theme: Base, Default, Glass, Monochrome, Soft
     theme=Monochrome
 kind: ConfigMap
