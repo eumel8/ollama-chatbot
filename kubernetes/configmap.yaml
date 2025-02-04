@@ -36,8 +36,8 @@ apiVersion: v1
 data:
   run.sh: |
     #!/bin/sh
-    #ollama pull nomic-embed-text
-    #ollama pull deepseek-r1:7b
+    ollama pull nomic-embed-text
+    ollama pull deepseek-r1:7b
     python3 web_crawler.py --urls ./urls/urls.txt --config ./chatbot-config/config.txt
     touch /vectorstore/crawl_ready
     sleep infinity
@@ -49,8 +49,6 @@ apiVersion: v1
 data:
   run.sh: |
     #!/bin/sh
-    ollama pull deepseek-r1:7b
-    ollama pull nomic-embed-text
     python3 web_ui.py --config ./chatbot-config/config.txt
 kind: ConfigMap
 metadata:

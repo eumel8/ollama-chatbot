@@ -3,7 +3,7 @@ vectorstore=vectorstore
 # Ollama model for text rendering
 embeddingmodel=nomic-embed-text
 # Ollama model for deep think
-mainmodel=deepseek-r1:1.5b
+mainmodel=deepseek-r1:7b
 # Deep of the web crawler
 crawldeep=1
 # Used vector results for deep think, be careful
