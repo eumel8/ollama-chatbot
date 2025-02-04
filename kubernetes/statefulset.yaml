@@ -32,10 +32,23 @@ spec:
         livenessProbe:
           exec:
             command:
-            - ls
-            - /tmp
+            - "sh"
+            - "-c"
+            - "test -d /home/appuser/.ollama"
           failureThreshold: 3
           initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: ollama
+        readinessProbe:
+          exec:
+            command:
+            - "sh"
+            - "-c"
+            - "test -d /home/appuser/.ollama"
+          failureThreshold: 3
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
@@ -54,7 +67,7 @@ spec:
             - ALL
             - CAP_NET_RAW
           privileged: false
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
           seccompProfile:
@@ -68,26 +81,18 @@ spec:
           name: tmp
       - command:
         - /home/appuser/run/run.sh
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
-        livenessProbe:
-          exec:
-            command:
-            - ollama
-            - list
-          failureThreshold: 3
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 1
-        name: ollama-chatbot
-        ports:
-        - containerPort: 9000
+        name: ollama-crawler
         readinessProbe:
           exec:
             command:
-            - ollama
-            - list
+            - "sh"
+            - "-c"
+            - "ollama list && echo 'Ollama ready' || 'Ollama NOT ready'"
           failureThreshold: 3
           initialDelaySeconds: 5
           periodSeconds: 5
@@ -95,8 +100,8 @@ spec:
           timeoutSeconds: 1
         resources:
           limits:
-            cpu: "12"
-            memory: 64Gi
+            cpu: "4"
+            memory: 4Gi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -107,7 +112,7 @@ spec:
             - ALL
             - CAP_NET_RAW
           privileged: false
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
           seccompProfile:
@@ -123,7 +128,73 @@ spec:
           name: tmp
         - name: config-volume
           mountPath: /home/appuser/chatbot-config
-        - name: run-volume
+        - name: run-crawler
+          mountPath: /home/appuser/run
+        - name: url-volume
+          mountPath: /home/appuser/urls
+      - command:
+        - /home/appuser/run/run.sh
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - "sh"
+            - "-c"
+            - "ollama list"
+          failureThreshold: 10
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: ollama-chatbot
+        ports:
+        - containerPort: 9000
+        readinessProbe:
+          exec:
+            command:
+            - "sh"
+            - "-c"
+            - "test -f /vectorstore/crawl_readye && echo 'Crawler is ready' || echo 'Crawler is NOT ready'"
+          failureThreshold: 90
+          initialDelaySeconds: 90
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "12"
+            memory: 64Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+            - CAP_NET_RAW
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1000
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /home/appuser/.ollama
+          name: ollama
+        - mountPath: /vectorstore
+          name: vectorstore
+        - mountPath: /tmp
+          name: tmp
+        - name: config-volume
+          mountPath: /home/appuser/chatbot-config
+        - name: run-ui
           mountPath: /home/appuser/run
         - name: url-volume
           mountPath: /home/appuser/urls
@@ -144,10 +215,14 @@ spec:
       - name: config-volume
         configMap:
           name: ollama-chatbot
-      - name: run-volume
+      - name: run-crawler
         configMap:
           defaultMode: 0755
-          name: run
+          name: run-crawler
+      - name: run-ui
+        configMap:
+          defaultMode: 0755
+          name: run-ui
       - name: url-volume
         configMap:
           name: urls
