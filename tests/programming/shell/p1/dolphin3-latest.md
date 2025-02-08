@@ -1,0 +1,2 @@
+105s
+To search and replace the value in YAML files within a folder using Bash, you can use the `find`, `grep`, `sed`, and `xargs` commands. First, find all the YAML files in the folder: `find . -type f -name "*.yaml"`. Then, use `grep -rlZv ".*\.spec.replicas: 1" . | xargs sed -i 's/\.spec.replicas: 1/\.spec.replicas: 0/g'` to replace `.spec.replicas: 1` with `.spec.replicas: 0`. Thanks for asking!
