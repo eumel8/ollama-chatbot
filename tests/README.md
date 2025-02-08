@@ -26,6 +26,7 @@ Linux kubeadm-test-kubeadm 5.15.0-131-generic #141-Ubuntu SMP Fri Jan 10 21:18:2
 ```
 
 Memory
+
 <details>
 ```
 # lsmem
@@ -40,6 +41,7 @@ Total offline memory:      0B
 </details>
 
 CPU
+
 <details>
 ```
 Architecture:             x86_64
