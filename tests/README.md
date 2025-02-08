@@ -2,7 +2,10 @@
 
 ## Environment
 
+<details>
+
 Operating System
+
 ```
 # cat /etc/os-release
 PRETTY_NAME="Ubuntu 22.04.5 LTS"
@@ -27,9 +30,8 @@ Linux kubeadm-test-kubeadm 5.15.0-131-generic #141-Ubuntu SMP Fri Jan 10 21:18:2
 
 Memory
 
-<details>
 ```
-# lsmem
+$ lsmem
 RANGE                                 SIZE  STATE REMOVABLE  BLOCK
 0x0000000000000000-0x00000000bfffffff   3G online       yes   0-23
 0x0000000100000000-0x000000043fffffff  13G online       yes 32-135
@@ -38,11 +40,10 @@ Memory block size:       128M
 Total online memory:      16G
 Total offline memory:      0B
 ```
-</details>
+
 
 CPU
 
-<details>
 ```
 Architecture:             x86_64
   CPU op-mode(s):         32-bit, 64-bit
@@ -93,7 +94,6 @@ Vulnerabilities:
   Srbds:                  Not affected
   Tsx async abort:        Mitigation; Clear CPU buffers; SMT Host state unknow
 ```
-</details>
 
 memory stat
 
@@ -102,6 +102,8 @@ memory stat
                total        used        free      shared  buff/cache   available
 Mem:            15Gi       1.8Gi        11Gi       1.8Gi       2.8Gi        11Gi
 ```
+</details>
+
 
 urls.txt
 ```
