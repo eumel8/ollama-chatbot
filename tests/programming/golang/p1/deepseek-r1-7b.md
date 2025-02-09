@@ -1,4 +1,5 @@
 184s
+
 <think>
 Okay, so the user wants to write a Go program that lists all pods in a Kubernetes cluster. I remember from the context provided that there's a GitHub repository with some relevant files.
 

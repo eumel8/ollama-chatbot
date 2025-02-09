@@ -1,4 +1,4 @@
-140s
+140s (looks good/wont work)
 
 To write a Go program that lists all Pods in a Kubernetes cluster, you can use the client-go library which is the official Go client for Kubernetes. Here's an example:
 

@@ -1,4 +1,5 @@
-71s
+71s looks interestung, but no main function and wont work
+
 To list all the pods in a Kubernetes cluster using Go, you can use the `k8s.io/client-go` package which is an official Go client for interacting with the Kubernetes API. Here's a basic example of how to get started:
 
 1. First, create a new Go project and import the required packages:

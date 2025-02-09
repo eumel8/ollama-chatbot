@@ -1,4 +1,6 @@
-22s
+22s (only a list function, not ful program
+
+
 Thanks for asking!
 
 Here's a Go program to list all Pods in a Kubernetes cluster:

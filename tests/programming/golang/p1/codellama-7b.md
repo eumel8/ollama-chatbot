@@ -1,4 +1,4 @@
-69s
+69s (wont work)
 
 Thanks for asking! Here is a sample Go program that uses the `k8s` package to list all Pods in a Kubernetes cluster:
 ```

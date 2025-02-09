@@ -1,4 +1,4 @@
-91s
+91s (won't work)
 
 I can provide you with an example Go program using the Kubernetes client-go library to list all pods in a Kubernetes cluster. First, make sure to set up your kubeconfig properly and install the necessary dependencies. Here's a simple snippet that you might use:
 
