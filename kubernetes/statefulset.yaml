@@ -27,6 +27,9 @@ spec:
         command:
         - sh
         - -c
+        env:
+        - name: OLAMA_HOST
+          value: "0.0.0.0:11434"
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
         livenessProbe:
@@ -53,6 +56,9 @@ spec:
           successThreshold: 1
           timeoutSeconds: 1
         name: ollama
+        ports:
+        - name: ollama
+          containerPort: 11434
         resources:
           limits:
             cpu: "12"
@@ -152,7 +158,8 @@ spec:
           timeoutSeconds: 5
         name: ollama-chatbot
         ports:
-        - containerPort: 9000
+        - name: ollama-chatbot
+          containerPort: 9000
         readinessProbe:
           exec:
             command:

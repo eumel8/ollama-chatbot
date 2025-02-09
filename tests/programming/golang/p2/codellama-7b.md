@@ -1,4 +1,5 @@
 not wrong, but ignore the question (no external traffic)
+second try does not work
 
 You can use the `kubectl` command-line tool to list all pods in a Kubernetes cluster. Here is an example of how to do
 this using the `kubectl get` command:
