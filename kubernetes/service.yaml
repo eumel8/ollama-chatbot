@@ -7,5 +7,18 @@ spec:
   selector:
     app: ollama-chatbot
   ports:
-    - port: 80
+    - name: ollama-chatbot
+      port: 80
       targetPort: 9000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ollama
+spec:
+  selector:
+    app: ollama-chatbot
+  ports:
+    - name: ollama
+      port: 11434
+      targetPort: 11434

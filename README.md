@@ -120,7 +120,27 @@ Tested models
 | mistral:7b                        | few results                                                                                              |
 | qwen:7b                           | server died
 | codellama:7b                      | good result in short time on the second query, example output of the question, how Cosignwebhook works:  `The program is a Go application that uses Cosign to sign and verify Docker images. The program consists of three main components: the Dockerfile, the cosignwebhook.go file, and the main.go file. The Dockerfile is used to build the image, and it specifies the steps needed to build the image. It also includes a reference to the Cosign CLI tool, which will be used to sign the image when it is built. The cosignwebhook.go file is a webhook that listens for events from the Docker daemon and uses Cosign to verify the signature of the images that re being pulled or pushed. This ensures that only trusted images are being used in the system. The main.go file is the entry point of the program, and it sets up the webhook and starts it running. It also includes code to handle events from the Docker daemon, such as when an image is pulled or pushed.` |
+| codellama:70b/deepseek-r1:70b/llama3.3:70b  | on GPU 128GB Ram, each model one by one ~42GB. Loaded >5 min no response
 
+But this was only the first shot. Look at the [test folder](./tests/README.md) for a second and a deeper look.
+
+## Ollama API
+
+Ollama can be query directly via API. If you installed Ollama in Kubernetes with the provided manifests in the kubernetes folder, Ollama listen on all network interfaces and can be query on Kubernetes service endpoint.
+
+```bash
+# curl http://ollama.ollama-chatbot.svc.cluster.local:11434/api/chat -d '{
+  "model": "deepseek-r1:7b",
+  "messages": [
+    { "role": "user", "content": "What is Cosignwebhook?" }
+  ],
+  "stream": false
+}'
+```
+
+Within the provided Ingress manifest the Ollama API can be used from extern, e.g. `curl https://kubeadm.otc.mcsps.de/api`.
+
+But be careful while exposing Ollama API: Everyone can use the API without authentification. Please refer [https://github.com/ollama/ollama/blob/main/docs/api.md](https://github.com/ollama/ollama/blob/main/docs/api.md)
 
 ## Credits
 

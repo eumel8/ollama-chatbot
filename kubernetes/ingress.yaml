@@ -20,6 +20,13 @@ spec:
               number: 80
         path: /
         pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: ollama
+            port:
+              number: 11434
+        path: /api
+        pathType: ImplementationSpecific
   tls:
   - hosts:
     -  kubeadm.otc.mcsps.de

@@ -1,0 +1,2 @@
+49s
+I don't have access to real-time information about the location of Berlin or any other specific place. However, I can tell you that Berlin is the capital city of Germany and it is located in the northeastern part of Europe. The exact distance between your current location and Berlin would depend on your starting point as well as the mode of transportation you are using to get there. If you have a specific starting point or method of transportation, I can try to provide you with an estimated distance and duration.
