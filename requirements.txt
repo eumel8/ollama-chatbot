@@ -1,10 +1,7 @@
 beautifulsoup4
 gradio
 PyPDF2
-langchain
-langchain-community
-chromadb
-#css
+langchain==0.3.18
+langchain-community==0.3.17
+chromadb==0.6.3
 ollama
-#grammar
-#spacy
