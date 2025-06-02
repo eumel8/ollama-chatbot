@@ -1,10 +1,15 @@
-FROM docker.io/ollama/ollama:latest
+FROM docker.io/ollama/ollama:latest as base
+
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew vim-tiny python3-venv python3-pip net-tools curl
 
 COPY . /home/appuser/
+COPY --from=base /bin /usr/bin
+COPY --from=base /lib/ollama/*.so /usr/lib/ollama/
+COPY --from=base /lib/ollama/cuda_v11 /usr/lib/ollama/cuda_v11
 
 RUN pip install -r /home/appuser/requirements.txt
 RUN useradd --create-home appuser
