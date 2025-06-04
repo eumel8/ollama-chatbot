@@ -1,16 +1,38 @@
+# Enhanced RAG Configuration
+
 # Directory where to store the VectorDB
 vectorstore=vectorstore
-# Ollama model for text rendering
+
+# Ollama model for text embedding (nomic-embed-text recommended)
 embeddingmodel=nomic-embed-text
-# Ollama model for deep think
+
+# Ollama model for text generation (adjust based on your hardware)
 mainmodel=deepseek-r1:7b
-# Deep of the web crawler
-crawldeep=1
-# Used vector results for deep think, be careful
-vectorresults=2
-# Listen address for web ui
-#servername=0.0.0.0
-# Listen port for web ui
-#serverport=9000
-# web ui theme: Base, Default, Glass, Monochrome, Soft
-theme=Monochrome
+
+# Depth of the web crawler (1-3 recommended for quality)
+crawldeep=2
+
+# Number of vector results for context (2-5 recommended for balance)
+vectorresults=3
+
+# Listen address for web UI (0.0.0.0 for all interfaces)
+servername=127.0.0.1
+
+# Listen port for web UI
+serverport=9000
+
+# Web UI theme options: Base, Default, Glass, Monochrome, Soft
+theme=Soft
+
+# Performance tuning
+# Chunk size for document processing (1500-2500 recommended)
+chunk_size=2000
+
+# Chunk overlap for better context continuity (200-300 recommended)
+chunk_overlap=250
+
+# Maximum cache size for embeddings (affects memory usage)
+embedding_cache_size=500
+
+# Rate limiting between requests (seconds)
+crawl_delay=1

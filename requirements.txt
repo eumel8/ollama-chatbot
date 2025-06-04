@@ -1,10 +1,21 @@
-beautifulsoup4
-gradio
-PyPDF2
-langchain
-langchain-community
-chromadb
-#css
-ollama
-#grammar
-#spacy
+# Core dependencies
+beautifulsoup4>=4.12.0
+gradio>=4.0.0
+PyPDF2>=3.0.0
+langchain>=0.1.0
+langchain-community>=0.0.20
+chromadb>=0.4.0
+ollama>=0.1.0
+
+# Enhanced processing
+numpy>=1.24.0
+requests>=2.31.0
+
+# Optional performance improvements
+# sentence-transformers>=2.2.0  # For better embeddings if available
+# faiss-cpu>=1.7.0  # For faster similarity search
+# spacy>=3.6.0  # For advanced NLP preprocessing
+
+# Development and monitoring
+# python-dotenv>=1.0.0  # For environment configuration
+# tqdm>=4.65.0  # For progress bars
