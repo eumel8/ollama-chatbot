@@ -15,8 +15,17 @@ data:
     servername=0.0.0.0
     # Listen port for web ui
     serverport=9000
-    # web ui theme: Base, Default, Glass, Monochrome, Soft
-    theme=Monochrome
+    # Web UI theme options: Base, Default, Glass, Monochrome, Soft
+    theme=Soft
+    # Performance tuning
+    # Chunk size for document processing (1500-2500 recommended)
+    chunk_size=2000
+    # Chunk overlap for better context continuity (200-300 recommended)
+    chunk_overlap=250
+    # Maximum cache size for embeddings (affects memory usage)
+    embedding_cache_size=500
+    # Rate limiting between requests (seconds)
+    crawl_delay=1
 kind: ConfigMap
 metadata:
   name: ollama-chatbot
