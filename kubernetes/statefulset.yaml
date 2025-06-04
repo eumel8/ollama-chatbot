@@ -28,7 +28,7 @@ spec:
         - sh
         - -c
         env:
-        - name: OLAMA_HOST
+        - name: OLLAMA_HOST
           value: "0.0.0.0:11434"
         image: ghcr.io/eumel8/ollama-chatbot/ollama:latest
         imagePullPolicy: Always
